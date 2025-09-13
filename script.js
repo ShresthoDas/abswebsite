@@ -2,8 +2,8 @@
 const eventsData = [
     {
         id: 1,
-        title: "Durga Puja 2024 - Mahalaya",
-        date: "2024-10-02",
+        title: "Durga Puja 2025 - Mahalaya",
+        date: "2025-09-02",
         time: "6:00 AM",
         location: "Community Center, Koregaon Park",
         description: "Join us for the traditional Mahalaya celebration marking the beginning of Durga Puja festivities.",
@@ -16,7 +16,7 @@ const eventsData = [
     {
         id: 2,
         title: "Sasthi Puja & Kalparambho",
-        date: "2024-10-10",
+        date: "2025-10-10",
         time: "6:00 PM",
         location: "Community Center, Koregaon Park",
         description: "The official beginning of Durga Puja with Sasthi puja and Kalparambho rituals.",
@@ -29,7 +29,7 @@ const eventsData = [
     {
         id: 3,
         title: "Saptami Puja & Pushpanjali",
-        date: "2024-10-11",
+        date: "2025-10-11",
         time: "8:00 AM",
         location: "Community Center, Koregaon Park",
         description: "Morning puja followed by traditional pushpanjali ceremony.",
@@ -42,7 +42,7 @@ const eventsData = [
     {
         id: 4,
         title: "Ashtami Puja & Kumari Puja",
-        date: "2024-10-12",
+        date: "2025-10-12",
         time: "9:00 AM",
         location: "Community Center, Koregaon Park",
         description: "Special Ashtami puja with Kumari puja ceremony for young girls.",
@@ -55,7 +55,7 @@ const eventsData = [
     {
         id: 5,
         title: "Navami Puja & Homa",
-        date: "2024-10-13",
+        date: "2025-10-13",
         time: "10:00 AM",
         location: "Community Center, Koregaon Park",
         description: "Navami puja with special homa ceremony and cultural performances.",
@@ -68,7 +68,7 @@ const eventsData = [
     {
         id: 6,
         title: "Dashami Puja & Visarjan",
-        date: "2024-10-14",
+        date: "2025-10-14",
         time: "4:00 PM",
         location: "Community Center, Koregaon Park",
         description: "Final day of Durga Puja with visarjan ceremony and sindoor khela.",
@@ -81,7 +81,7 @@ const eventsData = [
     {
         id: 7,
         title: "Rabindra Jayanti Celebration",
-        date: "2024-10-25",
+        date: "2025-10-25",
         time: "6:00 PM",
         location: "Cultural Hall, Koregaon Park",
         description: "Celebrating the birth anniversary of Rabindranath Tagore with poetry, music, and dance.",
@@ -94,7 +94,7 @@ const eventsData = [
     {
         id: 8,
         title: "Bengali Cooking Workshop",
-        date: "2024-11-05",
+        date: "2025-11-05",
         time: "10:00 AM",
         location: "Community Kitchen, Koregaon Park",
         description: "Learn to cook traditional Bengali dishes with expert chefs.",
@@ -107,7 +107,7 @@ const eventsData = [
     {
         id: 9,
         title: "Durga Puja Cultural Night",
-        date: "2024-10-12",
+        date: "2025-10-12",
         time: "7:00 PM",
         location: "Main Stage, Community Center",
         description: "An evening of Bengali music, dance, and drama performances.",
@@ -135,7 +135,8 @@ const eventsData = [
 // DOM Elements
 const hamburger = document.querySelector('.hamburger');
 const navMenu = document.querySelector('.nav-menu');
-const upcomingEventsGrid = document.getElementById('upcoming-events-grid');
+const upcomingEventsGrid = document.getElementById('events-grid');
+const today = new Date();
 
 // Navigation functionality
 if (hamburger && navMenu) {
@@ -231,11 +232,11 @@ function formatDate(dateString) {
 function initializeHomePage() {
     if (upcomingEventsGrid) {
         // Show only upcoming events (next 3)
-        const today = new Date();
+       
         const upcomingEvents = eventsData
             .filter(event => new Date(event.date) >= today)
             .sort((a, b) => new Date(a.date) - new Date(b.date))
-            .slice(0, 3);
+            ;
         
         displayEvents(upcomingEvents, upcomingEventsGrid);
     }
@@ -318,6 +319,47 @@ function resetContactForm() {
         form.reset();
     }
 }
+
+//event button functionality
+const tabButtons = document.querySelectorAll(".tab-btn");
+//const events = document.querySelectorAll(".event");
+
+tabButtons.forEach(button => {
+  button.addEventListener("click", () => {
+    // Remove "active" from all buttons
+    tabButtons.forEach(btn => btn.classList.remove("active"));
+    
+    // Add "active" to clicked button
+    button.classList.add("active");
+    
+    // Get selected category
+    const category = button.getAttribute("data-category");
+    var categoryEvents = eventsData;
+    // Show/Hide events
+    if (upcomingEventsGrid) {
+        // Show only upcoming events (next 3)
+       // const today = new Date();
+       if (category === "all") {
+         categoryEvents = eventsData
+         .filter(event => new Date(event.date) >= today)
+         .sort((a, b) => new Date(a.date) - new Date(b.date))
+         ;;
+       } else {
+         categoryEvents = eventsData.filter(event => event.category === category).filter(event => new Date(event.date) >= today)
+         .sort((a, b) => new Date(a.date) - new Date(b.date));
+       }
+      
+      
+        displayEvents(categoryEvents, upcomingEventsGrid);
+    }
+    
+   
+   
+  });
+});
+
+
+
 
 // Initialize the page when DOM is loaded
 document.addEventListener('DOMContentLoaded', initializeHomePage);
