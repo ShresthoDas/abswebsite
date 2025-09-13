@@ -588,8 +588,17 @@ p {
     }
 
     .committee-grid {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
+        display: flex;
+        overflow-x: auto;
+        gap: 1rem;
+        padding: 0 1rem;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .committee-member {
+        flex: 0 0 250px;
+        scroll-snap-align: start;
     }
 
     .about-main {
@@ -598,7 +607,17 @@ p {
     }
 
     .achievements-grid {
-        grid-template-columns: repeat(2, 1fr);
+        display: flex;
+        overflow-x: auto;
+        gap: 1rem;
+        padding: 0 1rem;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .achievement-item {
+        flex: 0 0 200px;
+        scroll-snap-align: start;
     }
 
     .benefits-grid {
@@ -698,10 +717,25 @@ p {
     }
 
     .achievements-grid {
-        grid-template-columns: 1fr;
+        display: flex;
+        overflow-x: auto;
+        gap: 0.8rem;
+        padding: 0 0.5rem;
+    }
+
+    .achievement-item {
+        flex: 0 0 180px;
+    }
+
+    .committee-grid {
+        display: flex;
+        overflow-x: auto;
+        gap: 0.8rem;
+        padding: 0 0.5rem;
     }
 
     .committee-member {
+        flex: 0 0 220px;
         padding: 1.5rem;
     }
 
@@ -1020,6 +1054,37 @@ p {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 2rem;
+}
+
+/* Mobile horizontal scroll styling */
+@media (max-width: 768px) {
+    .achievements-grid::-webkit-scrollbar {
+        height: 4px;
+    }
+
+    .achievements-grid::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 2px;
+    }
+
+    .achievements-grid::-webkit-scrollbar-thumb {
+        background: var(--primary-color);
+        border-radius: 2px;
+    }
+
+    .committee-grid::-webkit-scrollbar {
+        height: 4px;
+    }
+
+    .committee-grid::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 2px;
+    }
+
+    .committee-grid::-webkit-scrollbar-thumb {
+        background: var(--primary-color);
+        border-radius: 2px;
+    }
 }
 
 .achievement-item {
