@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Membership - Agradoot Bangosamaj</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2>Agradoot Bangosamaj</h2>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="about.html" class="nav-link">About</a>
+                </li>
+                <li class="nav-item">
+                    <a href="events.html" class="nav-link">Events</a>
+                </li>
+                <li class="nav-item">
+                    <a href="membership.html" class="nav-link active">Membership</a>
+                </li>
+                <li class="nav-item">
+                    <a href="contact.html" class="nav-link">Contact</a>
+                </li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Become a Member</h1>
+            <p>Join our vibrant community and be part of preserving Bengali culture</p>
+        </div>
+    </section>
+
+    <!-- Membership Benefits -->
+    <section class="membership-benefits">
+        <div class="container">
+            <div class="section-header">
+                <h2>Membership Benefits</h2>
+                <p>Enjoy exclusive privileges as a member of our community</p>
+            </div>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <i class="fas fa-ticket-alt"></i>
+                    <h3>Free Event Access</h3>
+                    <p>Complimentary entry to all events and celebrations throughout the year.</p>
+                </div>
+                <div class="benefit-card">
+                    <i class="fas fa-utensils"></i>
+                    <h3>Prasad & Bhog</h3>
+                    <p>Enjoy traditional Bengali prasad and bhog during Durga Puja and other festivals.</p>
+                </div>
+               <div class="benefit-card">
+                    <i class="fas fa-gift"></i>
+                    <h3>Member Exclusive Events</h3>
+                    <p>Lunch on Shoshti, Dinner on Dashami, Bijoya Sommeloni and Picnic</p>
+                </div>
+                <div class="benefit-card">
+                    <i class="fas fa-newspaper"></i>
+                    <h3>Newsletter</h3>
+                    <p>Regular updates about upcoming events, cultural news, and community activities.</p>
+                </div>
+                <div class="benefit-card">
+                    <i class="fas fa-users"></i>
+                    <h3>Community Network</h3>
+                    <p>Connect with fellow Bengalis and build lasting friendships in Pune.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Membership Plans -->
+    <section class="membership-plans">
+        <div class="container">
+            <div class="section-header">
+                <h2>Membership Plans</h2>
+                <p>Choose the plan that suits you best</p>
+            </div>
+            <div class="plans-grid">
+                <div class="plan-card">
+                    <div class="plan-header">
+                        <h3>Family Plan</h3>
+                        <div class="plan-price">
+                            <span class="currency">₹</span>
+                            <span class="amount">8000</span>
+                            <span class="period">/year</span>
+                        </div>
+                    </div>
+                    <ul class="plan-features">
+                        <li><i class="fas fa-check"></i> Free entry to all events</li>
+                        <li><i class="fas fa-check"></i> Prasad during festivals</li>
+                        <li><i class="fas fa-check"></i> Community newsletter</li>
+                        <li><i class="fas fa-check"></i> Member discounts</li>
+                        <li><i class="fas fa-check"></i> Voting rights</li>
+                    </ul>
+                    <button class="btn btn-outline" onclick="selectPlan('family')">Choose Plan</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Membership Form -->
+    <section class="membership-form-section">
+        <div class="container">
+            <div class="form-container">
+                <h2>Join Our Community</h2>
+                <form id="membership-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="member-name">Full Name *</label>
+                            <input type="text" id="member-name" name="memberName" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="member-email">Email Address *</label>
+                            <input type="email" id="member-email" name="memberEmail" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="member-phone">Phone Number *</label>
+                            <input type="tel" id="member-phone" name="memberPhone" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="member-pan">PAN Number *</label>
+                        <input type="text" id="member-pan" name="memberPan" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="member-address">Address *</label>
+                        <textarea id="member-address" name="memberAddress" rows="3" required></textarea>
+                    </div>
+                    
+
+                    <div class="form-group">
+                        <label for="member-city">City *</label>
+                        <input type="text" id="member-city" name="memberCity" value="Pune" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="member-pincode">Pincode *</label>
+                        <input type="text" id="member-pincode" name="memberPincode" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="family-members">Family Members</label>
+                        <textarea id="family-members" name="familyMembers" rows="2" placeholder="Name, Age, Relationship (e.g., Spouse: Priya, 35; Child: Arjun, 8)"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cultural-background">Cultural Background</label>
+                        <select id="cultural-background" name="culturalBackground">
+                            <option value="">Select Background</option>
+                            <option value="bengali">Bengali</option>
+                            <option value="bengali-origin">Bengali Origin</option>
+                            <option value="interested">Interested in Bengali Culture</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="interests">Areas of Interest</label>
+                        <div class="checkbox-group">
+                            <label><input type="checkbox" name="interests" value="puja"> Durga Puja Celebrations</label>
+                            <label><input type="checkbox" name="interests" value="music"> Music & Dance</label>
+                            <label><input type="checkbox" name="interests" value="food"> Bengali Cuisine</label>
+                            <label><input type="checkbox" name="interests" value="literature"> Literature & Poetry</label>
+                            <label><input type="checkbox" name="interests" value="volunteering"> Volunteering</label>
+                            <label><input type="checkbox" name="interests" value="children"> Children's Activities</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="terms" required>
+                            I agree to the Terms and Conditions and Privacy Policy *
+                        </label>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" onclick="resetForm()">Reset Form</button>
+                        <button type="submit" class="btn btn-primary">Submit Application</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Agradoot Bangosamaj</h3>
+                    <p>Celebrating Bengali culture and traditions in Pune since 2018.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="events.html">Events</a></li>
+                        <li><a href="membership.html">Membership</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <p><i class="fas fa-map-marker-alt"></i> Pune, Maharashtra</p>
+                    <p><i class="fas fa-phone"></i> +91 8600768686</p>
+                    <p><i class="fas fa-envelope"></i> agradootpune@gmail.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Agradoot Bangosamaj. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
