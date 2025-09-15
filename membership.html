@@ -31,6 +31,9 @@
                 <li class="nav-item">
                     <a href="contact.html" class="nav-link">Contact</a>
                 </li>
+                    <li class="nav-item">
+                        <a href="gallery.html" class="nav-link">Gallery</a>
+                    </li>
             </ul>
             <div class="hamburger">
                 <span class="bar"></span>
@@ -109,7 +112,7 @@
                         <li><i class="fas fa-check"></i> Member discounts</li>
                         <li><i class="fas fa-check"></i> Voting rights</li>
                     </ul>
-                    <button class="btn btn-outline" onclick="selectPlan('family')">Choose Plan</button>
+                    <button class="btn btn-outline" onclick="selectPlan('family')">Become A Member</button>
                 </div>
             </div>
         </div>
@@ -194,7 +197,7 @@
                     </div>
                     <div class="form-actions">
                         <button type="button" class="btn btn-secondary" onclick="resetForm()">Reset Form</button>
-                        <button type="submit" class="btn btn-primary">Submit Application</button>
+                        <button type="submit" class="btn btn-primary" onclick = "saveMembers()">Submit Application</button>
                     </div>
                 </form>
             </div>
@@ -236,7 +239,25 @@
             </div>
         </div>
     </footer>
+ <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyBydEcU3RR57_ICPCJ0Y49i1nMlFoeaIOU",
+    authDomain: "abs-accounts.firebaseapp.com",
+    databaseURL: "https://abs-accounts-default-rtdb.firebaseio.com",
+    projectId: "abs-accounts",
+    storageBucket: "abs-accounts.firebasestorage.app",
+    messagingSenderId: "511600041488",
+    appId: "1:511600041488:web:62c4dff20a8d9cde71f495",
+    measurementId: "G-ED8JFX4NQG"
+  };
+  if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+  }
+</script>
+<script src="script.js"></script>
 
-    <script src="script.js"></script>
+
 </body>
 </html>

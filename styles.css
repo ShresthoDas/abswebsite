@@ -1,3 +1,77 @@
+/* Event Modal Styles */
+.event-modal {
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: auto;
+    background: rgba(0,0,0,0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.event-modal-content {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 12px;
+    max-width: 400px;
+    width: 100%;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+    position: relative;
+}
+.event-modal-close {
+    position: absolute;
+    top: 12px;
+    right: 18px;
+    font-size: 2rem;
+    color: #888;
+    cursor: pointer;
+}
+#event-register-form .form-group {
+    margin-bottom: 1rem;
+}
+#event-register-form label {
+    display: block;
+    margin-bottom: 0.3rem;
+    font-weight: 500;
+}
+#event-register-form input {
+    width: 100%;
+    padding: 0.5rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+}
+/* About Collage Grid */
+.about-collage-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 16px;
+    padding: 16px 0;
+    justify-items: center;
+    align-items: center;
+}
+.about-img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.about-img:hover {
+    transform: scale(1.07);
+    box-shadow: 0 6px 24px rgba(0,0,0,0.18);
+}
+.about-collage-caption {
+    text-align: center;
+    font-size: 1.1rem;
+    color: var(--text-dark);
+    margin-top: 8px;
+    font-weight: 500;
+}
 /* Reset and Base Styles */
 * {
     margin: 0;
@@ -230,6 +304,8 @@ p {
     position: relative;
 }
 
+
+
 .durga-silhouette {
     width: 300px;
     height: 400px;
@@ -237,11 +313,33 @@ p {
     border-radius: 20px;
     position: relative;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-    transform: rotate(-5deg);
+    /* Remove rotation for straight alignment */
+    transform: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.hero-image img {
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    background: #fff;
+    display: block;
+    margin: auto;
+    transition: box-shadow 0.3s, transform 0.3s;
+}
+/* Optional: subtle hover effect */
+.hero-image img:hover {
+    box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+    transform: scale(1.03);
 }
 
 .durga-silhouette::before {
-    content: '🕉️';
+    content: '';
     position: absolute;
     top: 50%;
     left: 50%;
