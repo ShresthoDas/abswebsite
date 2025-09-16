@@ -3,7 +3,7 @@
 const eventsData = [
     {
         id: 1,
-        title: "Durga Puja 2025 - Mahalaya",
+        title: "Mahalaya",
         date: "2025-09-21",
         time: "6:00 AM",
         location: "ABS Pujo Ground, Kharadi",
@@ -15,7 +15,7 @@ const eventsData = [
     },
     {
         id: 2,
-        title: "Durga Puja 2025 - Choturthi",
+        title: "Choturthi",
         date: "2025-09-26",
         time: "7:00 PM",
         location: "ABS Pujo Ground, Kharadi",
@@ -139,6 +139,18 @@ const eventsData = [
         category: "puja",
         price: "Free",
         image: "dashami"
+    },
+    {
+        id: 10,
+        title: "Dashami Dinner",
+        date: "2025-10-02",
+        time: "10:00 PM",
+        location: "ABS Pujo Ground, Kharadi",
+        description: "Community dinner to conclude the Durga Puja celebrations.",
+        category: "puja",
+        price: "Free",
+        image: "dashami",
+        registerRequired: true
     }
     
 ];
@@ -198,11 +210,7 @@ function createEventCard(event) {
                 <span class="event-location">
                     <i class="fas fa-map-marker-alt"></i> ${event.location}
                 </span>
-                <span class="event-price">${event.price}</span>
-            </div>
-            <!--div class="event-availability">
-                <small>${availability} spots remaining</small>
-            </div--!>
+             </div>
             ${isAvailable ? `<button class="register-btn">Register Now</button>` : ''}
         </div>
     `;
@@ -368,63 +376,170 @@ tabButtons.forEach(button => {
   });
 });
 
-document.addEventListener('DOMContentLoaded', function() {
-    function openEventModal(eventTitle) {
-        document.getElementById('event-modal').style.display = 'block';
-        document.getElementById('modal-event-title').textContent = 'Register for ' + eventTitle;
-        document.getElementById('event-details').value = eventTitle;
-    }
-    function closeEventModal() {
-        document.getElementById('event-modal').style.display = 'none';
-        document.getElementById('event-register-form').reset();
-    }
-    document.getElementById('event-modal-close').onclick = closeEventModal;
-    window.onclick = function(event) {
-        if (event.target === document.getElementById('event-modal')) closeEventModal();
+// In the modal form submit handler, save registration to Firebase
+function setupEventModalHandlers(title) {
+    const modal = document.getElementById('event-modal-'+title);
+    const form = document.getElementById('event-register-form-'+title);
+    const eventRegistrations = "/UAT/Events/2025/Registrations/";
+    if (!form) return;
+    document.getElementById('event-modal-close').onclick = function() {
+        modal.style.display = 'none';
+        form.reset();
     };
+    window.onclick = function(event) {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+            form.reset();
+        }
+    };
+    form.onsubmit = function(ev) {
+        ev.preventDefault();
+        // Get form values
+        const memberId = document.getElementById('event-member-id').value;
+        const memberName = document.getElementById('event-member-name').value;
+        const participants = document.getElementById('event-participants').value;
+        const eventDetails = document.getElementById('event-details').value;
+        // Save to Firebase
+        const database = firebase.database();
+        const newRegRef = database.ref(eventRegistrations).push();
+        newRegRef.set({
+            memberId,
+            memberName,
+            participants,
+            eventDetails,
+            key : newRegRef.key
+        })
+        .then(() => {
+            alert('Registration submitted!');
+            modal.style.display = 'none';
+            form.reset();
+        })
+        .catch((error) => {
+            alert('Error submitting registration: ' + error.message);
+        });
+    };
+}
+
+// Load event registration modal from external file
+function loadEventModal(callback) {
+    // Only load if not already loaded
+    if (document.querySelector('[id^="event-modal"]')) {
+        if (callback) callback();
+        return;
+    }
+    fetch('events-modal.html')
+        .then(response => response.text())
+        .then(html => {
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = html;
+            // Append all modals with id starting with 'event-modal' to body
+            tempDiv.querySelectorAll('[id^="event-modal"]').forEach(modal => {
+                document.body.appendChild(modal);
+            });
+            if (callback) callback();
+        });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
     // Attach to all register-btns
     document.body.addEventListener('click', function(e) {
         if (e.target.classList.contains('register-btn')) {
-            const card = e.target.closest('.event-card');
-            const title = card.querySelector('.event-title').textContent;
-            openEventModal(title);
+            loadEventModal(function() {
+                                // Prefill event details
+                                const card = e.target.closest('.event-card');
+                                let title = card.querySelector('.event-title').textContent;
+                                
+                                // Normalize event title for modal/form ID (lowercase, trim, remove non-alphanum)
+                                let normalized = title.replace(/[^a-zA-Z0-9]/g, '').toLowerCase().trim();
+                                let modalId = 'event-modal-' + normalized;
+                                let formId = 'event-register-form-' + normalized;
+                                let closeBtnId = 'event-modal-close-' + normalized;
+                                let modal = document.getElementById(modalId);
+                                let form = document.getElementById(formId);
+                                let closeBtn = document.getElementById(closeBtnId);
+                                const eventRegistrations = "/UAT/Events/2025/Registrations/" + normalized;
+                               
+                                // Fallback to generic modal if not found
+                                if (!modal || !form || !closeBtn) {
+                                    console.warn('[DEBUG] Falling back to generic modal/form/closeBtn');
+                                    modal = document.getElementById('event-modal');
+                                    form = document.getElementById('event-register-form');
+                                    closeBtn = document.getElementById('event-modal-close');
+                                }
+                                if (!modal || !form || !closeBtn) {
+                                    console.error('[DEBUG] Modal, form, or close button not found:', {modalId, formId, closeBtnId});
+                                    alert('Registration form not found for this event.');
+                                    return;
+                                }
+                modal.style.display = 'block';
+                modal.querySelector('#modal-event-title').textContent = 'Register for ' + title;
+                modal.querySelector('#event-details').value = title;
+                // Setup handlers for this modal
+                form.onsubmit = function(ev) {
+                    ev.preventDefault();
+                    // Save to Firebase
+                    const database = firebase.database();
+                    const newRegRef = database.ref(eventRegistrations).push();
+
+                    // Get form values
+                    const memberId = modal.querySelector('#event-member-id').value;
+                    const memberName = modal.querySelector('#event-member-name').value;
+                    const eventDetails = modal.querySelector('#event-details').value;
+                    var vegParticipants = 0;
+                    var nonVegParticipants =0;
+                    var participants = 0;
+        
+                    console.log("Normalized Event Title: ", normalized);
+
+                    if (normalized === 'shosthi') {
+                        vegParticipants = modal.querySelector('#event-participants').value;
+                         
+                    } else  if (normalized === 'dashamidinner') {
+                        vegParticipants = modal.querySelector('#event-participants-veg').value;
+                       nonVegParticipants = modal.querySelector('#event-participants-nonveg').value;
+                       
+                    } else {
+                         participants = modal.querySelector('#event-participants').value;
+                        
+                    }
+
+                    
+                    
+                    newRegRef.set({
+                        memberId,
+                        memberName,
+                        vegParticipants,
+                        nonVegParticipants,
+                        participants,
+                        eventDetails,
+                        key : newRegRef.key
+                    })
+                    .then(() => {
+                        alert('Registration submitted!');
+                        modal.style.display = 'none';
+                        form.reset();
+                    })
+                    .catch((error) => {
+                        alert('Error submitting registration: ' + error.message);
+                    });
+                };
+                // Close logic
+                closeBtn.onclick = function() {
+                    modal.style.display = 'none';
+                    form.reset();
+                };
+                window.onclick = function(event) {
+                    if (event.target === modal) {
+                        modal.style.display = 'none';
+                        form.reset();
+                    }
+                };
+            });
         }
     });
-    // Simple submit handler
-    document.getElementById('event-register-form').onsubmit = function(e) {
-        const form = document.getElementById('event-register-form');
-         
-
-        console.log("id",form.eventMemberId.value)
-        const registrations = "/UAT/Events/2025/Registrations/"
-        firebase.initializeApp(firebaseConfig);
-        const database = firebase.database();
-        const newRegRef = database.ref(registrations).push();
-        const key = newRegRef.key;
-
-        const eventData = {
-                memberId: form.eventMemberId.value,
-                memberName: form.eventMemberName.value,
-                participants: form.eventParticipants.value,
-                eventDetails: form.eventDetails.value,
-                key : key
-            };
-
-            newRegRef.set(eventData)
-                .then(() => {
-                    alert("Event registration successful!");
-                    form.reset();
-                    //closeEventModal();
-                })
-                .catch((error) => {
-                    console.error("Error registering event:", error);
-                });
-               e.preventDefault();
-       // alert('Registration submitted!');
-        
-    };
 });
 
+// Firebase related functions
 function saveMembers(){
     const members = "/UAT/Accounts/2025/UnauthMembers/";
     if (!firebase.apps.length) {
@@ -465,28 +580,7 @@ function saveMembers(){
     }
 }
 
-function eventRegistration(eventData){
-    const registrations = "/UAT/Events/2025/Registrations/";
-    if (!firebase.apps.length) {
-        firebase.initializeApp(firebaseConfig);
-    }
-    const database = firebase.database();
-    
-   // console.log("Event Registration Form: ", form);
-    // Remove any existing submit listeners before adding a new one
-   
-       
-            const newRegistrationRef = database.ref(registrations).push();
-           // const key = newRegistrationRef.key;
-           
-            const regRef = push(ref(database, registrations))
 
-            return set(regRef, {eventData,key : regRef.key});
-
-
-           
-   
-}
 
 
 
