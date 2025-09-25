@@ -15,14 +15,14 @@ const eventsData = [
     },
     {
         id: 2,
-        title: "Choturthi",
+        title: "Anondo Mela & Cultural Programs",
         date: "2025-09-26",
         time: "7:00 PM",
         location: "ABS Pujo Ground, Kharadi",
         description: "Join us for Anondo Mela and other cultural programs to start the festivities.",
-        category: "puja",
+        category: "social",
         price: "Free",
-        image: "mahalaya"
+        
     },
     {
         id: 3,
@@ -151,6 +151,61 @@ const eventsData = [
         price: "Free",
         image: "dashami",
         registerRequired: true
+    },
+    {
+        id: 11,
+        title: "In-House Cultural Night",
+        date: "2025-09-28",
+        time: "07:00 PM",
+        location: "ABS Pujo Ground, Kharadi",
+        description: "An evening of cultural performances and community bonding.",
+        category: "cultural",
+        price: "Free",
+        image: "dashami"
+    },
+    {
+        id: 12,
+        title: "In-House Cultural Night",
+        date: "2025-09-29",
+        time: "07:00 PM",
+        location: "ABS Pujo Ground, Kharadi",
+        description: "An evening of cultural performances and community bonding.",
+        category: "cultural",
+        price: "Free",
+        image: "dashami"
+    },
+    {
+        id: 13,
+        title: "Dohaar Live Concert",
+        date: "2025-09-30",
+        time: "07:00 PM",
+        location: "ABS Pujo Ground, Kharadi",
+        description: "An evening of cultural performances and community bonding.",
+        category: "cultural",
+        price: "Free",
+        image: "dashami"
+    },
+    {
+        id: 14,
+        title: "Ranita Banerjee and Ayan Banerjee Live Concert",
+        date: "2025-10-01",
+        time: "07:00 PM",
+        location: "ABS Pujo Ground, Kharadi",
+        description: "An evening of cultural performances and community bonding.",
+        category: "cultural",
+        price: "Free",
+        image: "dashami"
+    },
+    {
+        id: 15,
+        title: "Garba Night",
+        date: "2025-09-27",
+        time: "07:00 PM",
+        location: "ABS Pujo Ground, Kharadi",
+        description: "An evening of garba dance and festivities for all ages.",
+        category: "cultural",
+        price: "Free",
+        image: "dashami"
     }
     
 ];
@@ -199,9 +254,7 @@ function createEventCard(event) {
    // const isAvailable = availability > 0;
    const isAvailable = event.registerRequired ;
     card.innerHTML = `
-        <div class="event-image">
-            <i class="fas fa-${getEventIcon(event.image)}"></i>
-        </div>
+       
         <div class="event-content">
             <div class="event-date">${formatDate(event.date)} at ${event.time}</div>
             <h3 class="event-title">${event.title}</h3>
@@ -232,7 +285,7 @@ function getEventIcon(imageType) {
         'cultural-night': 'music',
         'picnic': 'tree'
     };
-    return icons[imageType] || 'calendar';
+    return icons[imageType] ;/*|| 'calendar';*/
 }
 
 // Format date for display
